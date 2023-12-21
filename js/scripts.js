@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     /***************** Waypoints ******************/
 
     $('.wp1').waypoint(function () {
@@ -93,14 +92,16 @@ $(document).ready(function () {
                 $('section.navigation').addClass('fixed');
                 $('header').css({
                     "border-bottom": "none",
-                    "padding": "35px 0"
+                    "padding": "45px 0"
                 });
                 $('header .member-actions').css({
-                    "top": "26px",
+                    "top": "30px",
                 });
                 $('header .navicon').css({
                     "top": "34px",
                 });
+                // Add this line to change font color when fixed
+                $('header a').css('color', $black-color); // Or any other dark color that suits
             } else {
                 $('section.navigation').removeClass('fixed');
                 $('header').css({
@@ -113,9 +114,12 @@ $(document).ready(function () {
                 $('header .navicon').css({
                     "top": "48px",
                 });
+                // Add this line to revert font color
+                $('header a').css('color', $txt-light); // Reverting back to original color
             }
         });
     });
+
     /***************** Smooth Scrolling ******************/
 
     $(function () {
@@ -147,7 +151,7 @@ $(document).ready(function () {
 
     for (var i = 0; i < share_bar.length; i++) {
         var html = '<iframe allowtransparency="true" frameborder="0" scrolling="no"' +
-            'src="https://platform.twitter.com/widgets/tweet_button.html?url=' + encodeURIComponent(window.location) + '&amp;text=' + encodeURIComponent(document.title) + '&amp;via=ramswarooppatra&amp;hashtags=ramandantara&amp;count=horizontal"' +
+            'src="https://platform.twitter.com/widgets/tweet_button.html?url=' + encodeURIComponent(window.location) + '&amp;text=' + encodeURIComponent(document.title) + '&amp;via=ramswarooppatra&amp;count=horizontal"' +
             'style="width:105px; height:21px;">' +
             '</iframe>' +
 
@@ -157,8 +161,9 @@ $(document).ready(function () {
 
         // '<iframe src="https://plusone.google.com/_/+1/fastbutton?bsv&amp;size=medium&amp;url=' + encodeURIComponent(window.location) + '" allowtransparency="true" frameborder="0" scrolling="no" title="+1" style="width:105px; height:21px;"></iframe>';
 
-        share_bar[i].innerHTML = html;
-        share_bar[i].style.display = 'inline-block';
+        // Hector: uncomment next two lines to add media share button
+        // share_bar[i].innerHTML = html;
+        // share_bar[i].style.display = 'inline-block';
     }
 
     /********************** Embed youtube video *********************/
@@ -184,23 +189,23 @@ $(document).ready(function () {
         },
         data: {
             // Event title
-            title: "Ram and Antara's Wedding",
+            title: "Sandra and Hector's Boda/Wedding - hora/hour por determinar/TBD",
 
             // Event start date
-            start: new Date('Nov 27, 2017 10:00'),
+            start: new Date('May 18, 2023 14:00'),
 
             // Event duration (IN MINUTES)
             // duration: 120,
 
             // You can also choose to set an end time
             // If an end time is set, this will take precedence over duration
-            end: new Date('Nov 29, 2017 00:00'),
+            end: new Date('May 18, 2023 02:00'),
 
             // Event Address
-            address: 'ITC Fortune Park Hotel, Kolkata',
+            address: 'Masia Can Pi de la Serra, Camí de Can Pi de la Serra, 08191 Rubí, Barcelona, España',
 
             // Event Description
-            description: "We can't wait to see you on our big day. For any queries or issues, please contact Mr. Amit Roy at +91 9876543210."
+            description: "Te esperamos en nuestra boda. We are looking forward to seeing you at our wedding. For any queries or issues/para preguntas o dificultades, please contact/favor contactar Hector, +1-438-496-7566, hectorpal@gmail.com o Sandra, +1-438-928-4705, hofsan1@gmail.com."
         }
     });
 
@@ -214,11 +219,10 @@ $(document).ready(function () {
 
         $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
 
-        if (MD5($('#invite_code').val()) !== 'b0e53b10c1f55ede516b240036b88f40'
-            && MD5($('#invite_code').val()) !== '2ac7f43695eb0479d5846bb38eec59cc') {
+        if (MD5($('#invite_code').val()) !== '5f9ddd2abf743d59801bb26a2bf75e37') {
             $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
         } else {
-            $.post('https://script.google.com/macros/s/AKfycbyo0rEknln8LedEP3bkONsfOh776IR5lFidLhJFQ6jdvRiH4dKvHZmtoIybvnxpxYr2cA/exec', data)
+            $.post('https://script.google.com/macros/s/AKfycbzMdu1k19EfjjOO20CxtTa9uOqMAmi5LhljvrgIAx9zbljpTXT_3E3_pVQB-tPP4IZt/exec', data)
                 .done(function (data) {
                     console.log(data);
                     if (data.result === "error") {
@@ -226,6 +230,7 @@ $(document).ready(function () {
                     } else {
                         $('#alert-wrapper').html('');
                         $('#rsvp-modal').modal('show');
+                        $('#rsvp-form')[0].reset();
                     }
                 })
                 .fail(function (data) {
@@ -239,10 +244,12 @@ $(document).ready(function () {
 
 /********************** Extras **********************/
 
+let map;
+
 // Google map
-function initMap() {
-    var location = {lat: 22.5932759, lng: 88.27027720000001};
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
+async function initMap() {
+    var location = {lat: 41.498366, lng: 1.999336};
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
         zoom: 15,
         center: location,
         scrollwheel: false
@@ -254,19 +261,19 @@ function initMap() {
     });
 }
 
-function initBBSRMap() {
-    var la_fiesta = {lat: 20.305826, lng: 85.85480189999998};
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
-        zoom: 15,
-        center: la_fiesta,
-        scrollwheel: false
-    });
+// function initBBSRMap() {
+//     var la_fiesta = {lat: 20.305826, lng: 85.85480189999998};
+//     var map = new google.maps.Map(document.getElementById('map-canvas'), {
+//         zoom: 15,
+//         center: la_fiesta,
+//         scrollwheel: false
+//     });
 
-    var marker = new google.maps.Marker({
-        position: la_fiesta,
-        map: map
-    });
-}
+//     var marker = new google.maps.Marker({
+//         position: la_fiesta,
+//         map: map
+//     });
+// }
 
 // alert_markup
 function alert_markup(alert_type, msg) {
