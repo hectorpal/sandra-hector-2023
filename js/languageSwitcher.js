@@ -20,4 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // For example, you can set the default language based on the browser's settings:
     const defaultLang = navigator.language.startsWith('es') ? 'es' : 'en';
     switchLanguage(defaultLang);
+
+    // Add event listener for English language switch
+    document.getElementById('switchToEn').addEventListener('click', function() {
+        switchLanguage('en');
+    });
+
+    // Add event listener for Spanish language switch
+    document.getElementById('switchToEs').addEventListener('click', function() {
+        switchLanguage('es');
+    });
 });
