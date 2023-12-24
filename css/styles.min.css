@@ -2,6 +2,10 @@
 @import "https://fonts.googleapis.com/css?family=Merriweather:400,300,400italic,300italic,700,700italic";
 @import "https://fonts.googleapis.com/css?family=Nunito:400,300,700";
 
+.active-lang {
+    font-weight: bold;
+}
+
 p {
     font-size: 15px;
     line-height: 29px;

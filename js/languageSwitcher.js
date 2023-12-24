@@ -13,7 +13,16 @@ function switchLanguage(lang) {
     document.querySelectorAll('[data-translate]').forEach(el => {
         el.textContent = languageData[lang][el.getAttribute('data-translate')];
     });
+
+    // Update active state styling
+    document.querySelectorAll('#switchToEn, #switchToEs').forEach(el => {
+        el.classList.remove('active-lang');
+    });
+
+    const activeElementId = lang === 'en' ? 'switchToEn' : 'switchToEs';
+    document.getElementById(activeElementId).classList.add('active-lang');
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Place your initial language switch logic here.
