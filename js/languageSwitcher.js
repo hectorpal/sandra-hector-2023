@@ -53,7 +53,34 @@ const languageData = {
         kids_placeholder: "Niños",
         invite_code_placeholder: "Código de invitación",
         show_map: "Mostrar mapa"
-    }
+    },
+    de: {
+        title_wedding: "Hochzeit & Empfang",
+        title_direction: "Richtungsbilder",
+        title_venue: "Veranstaltungsort",
+        title_rsvp: "RSVP",
+        section_get_married: "Wir heiraten!",
+        event_date: "Das Datum ist der 18. Mai '24 und<br>wir möchten, dass du ein Teil davon bist.",
+        section_event: "Veranstaltungen",
+        wedding_event: "Hochzeit",
+        wedding_details: "Details später.",
+        reception_event: "Empfang",
+        reception_details: "Details später.",
+        section_getting_there: "Wie komme ich dorthin?",
+        getting_there_comment: "Es ist viel einfacher als du denkst!",
+        show_info: "Info anzeigen",
+        section_thank_you: "Danke!",
+        thank_you_content: "Wir freuen uns, dass du an unserem großen Tag bei uns bist.",
+        section_rsvp: "Worauf wartest du?",
+        rsvp_details: "Wir würden uns freuen, wenn du dich vor dem 15. Januar '24 anmelden könntest.<br>Erwachsene Kinder? Vielleicht zählen sie als Erwachsene.<br>Das Essen der Kinder könnte anders sein.",
+        rsvp_button: "Ja, das bin ich!",
+        email_placeholder: "Deine E-Mail",
+        name_placeholder: "Dein Name",
+        extra_adults_placeholder: "Extra Erwachsene",
+        kids_placeholder: "Kinder",
+        invite_code_placeholder: "Einladungscode",
+        show_map: "Karte anzeigen"
+    },
 };
 
 function switchLanguage(lang) {
@@ -68,28 +95,66 @@ function switchLanguage(lang) {
     });
 
     // Update active state styling
-    document.querySelectorAll('#switchToEn, #switchToEs').forEach(el => {
+    document.querySelectorAll('#switchToEn, #switchToEs, #switchToDe').forEach(el => {
         el.classList.remove('active-lang');
     });
 
-    const activeElementId = lang === 'en' ? 'switchToEn' : 'switchToEs';
+    let activeElementId;
+    switch (lang) {
+        case 'en':
+            activeElementId = 'switchToEn';
+            break;
+        case 'es':
+            activeElementId = 'switchToEs';
+            break;
+        case 'de':
+            activeElementId = 'switchToDe';
+            break;
+        default:
+            activeElementId = 'switchToEn';
+    }
     document.getElementById(activeElementId).classList.add('active-lang');
 }
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Place your initial language switch logic here.
     // For example, you can set the default language based on the browser's settings:
-    const defaultLang = navigator.language.startsWith('es') ? 'es' : 'en';
+    // Set default language based on browser language among these three: en, es, de
+    let defaultLang;
+    switch (navigator.language.slice(0, 2)) {
+        case 'en':
+            defaultLang = 'en';
+            break;
+        case 'es':
+            defaultLang = 'es';
+            break;
+        case 'de':
+            defaultLang = 'de';
+            break;
+        default:
+            defaultLang = 'en'; // default to 'en' if the language is not one of the specified
+    }
     switchLanguage(defaultLang);
 
-    // Add event listener for English language switch
-    document.getElementById('switchToEn').addEventListener('click', function() {
-        switchLanguage('en');
+    // Add event listener for English language switch to all elements with id 'switchToEn'
+    document.querySelectorAll('#switchToEn').forEach(el => {
+        el.addEventListener('click', function() {
+            switchLanguage('en');
+        })
     });
 
-    // Add event listener for Spanish language switch
-    document.getElementById('switchToEs').addEventListener('click', function() {
-        switchLanguage('es');
+    // Add event listener for Spanish language switch to all elements with id 'switchToEs'
+    document.querySelectorAll('#switchToEs').forEach(el => {
+        el.addEventListener('click', function() {
+            switchLanguage('es');
+        })
     });
+
+    // Add event listener for German language switch to all elements with id 'switchToDe'
+    document.querySelectorAll('#switchToDe').forEach(el => {
+        el.addEventListener('click', function() {
+            switchLanguage('de');
+        })
+    });
+
 });
